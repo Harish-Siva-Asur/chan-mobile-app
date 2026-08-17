@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CHAN - Choose Hard And Nice</title>
+  
+  <meta name="theme-color" content="#050811">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CHAN">
+
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div id="app-root">
+  <!-- Interactive Cyber Canvas Background -->
+  <canvas id="bgCanvas"></canvas>
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Mobile Screen Container -->
+  <main class="mobile-frame">
+
+    <!-- ==================== PHASE 1: CINEMATIC INTRO SCREEN ==================== -->
+    <section id="phase1" class="phase-screen active">
+      <div class="intro-badge">
+        <span class="dot"></span>
+        <span>PROTOCOL SYSTEM ACTIVE</span>
+      </div>
+
+      <div class="intro-hero">
+        <h1 class="brand-title">CHAN</h1>
+        <div class="brand-subtitle">CHOOSE HARD AND NICE</div>
+        <p class="brand-tagline">Solo Leveling Cyber-Athletic Protocol</p>
+      </div>
+
+      <button id="btnEnterProtocol" class="btn-enter" type="button">
+        <span>INITIALIZE</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- ==================== PHASE 2: SECURITY ACCESS GATE ==================== -->
+    <section id="phase2" class="phase-screen">
+      <div class="security-card">
+        <div class="security-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00F2FE" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+
+        <h2 class="security-title">HUNTER ACCESS</h2>
+        <p class="security-desc">Enter 4-Digit Security PIN (Default: 1234)</p>
+
+        <!-- PIN Dots Display -->
+        <div class="pin-display">
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+        </div>
+
+        <!-- Touch Keypad -->
+        <div class="pin-grid">
+          <button class="pin-btn" data-num="1">1</button>
+          <button class="pin-btn" data-num="2">2</button>
+          <button class="pin-btn" data-num="3">3</button>
+          <button class="pin-btn" data-num="4">4</button>
+          <button class="pin-btn" data-num="5">5</button>
+          <button class="pin-btn" data-num="6">6</button>
+          <button class="pin-btn" data-num="7">7</button>
+          <button class="pin-btn" data-num="8">8</button>
+          <button class="pin-btn" data-num="9">9</button>
+          <button class="pin-btn btn-action" id="btnPinClear">CLR</button>
+          <button class="pin-btn" data-num="0">0</button>
+          <button class="pin-btn btn-action" id="btnPinDel">⌫</button>
+        </div>
+
+        <button id="btnBackToTitle" class="btn-back-link" type="button">
+          ◀ Return to Title
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== PHASE 3: MAIN APP DASHBOARD ==================== -->
+    <section id="phase3" class="phase-screen">
+
+      <!-- TOP HUD STATUS BAR -->
+      <header class="hud-bar">
+        <div class="hud-player">
+          <div class="avatar-wrapper" id="hudAvatarBox" title="Tap to Edit Profile">
+            <span id="hudPlayerAvatar">⚡</span>
+            <div class="avatar-rank-pill" id="hudRankPill">E</div>
+          </div>
+          <div class="player-details">
+            <div class="player-name-row">
+              <span class="player-name" id="hudPlayerName">Shadow Warrior</span>
+            </div>
+            <div class="player-title" id="hudPlayerTitle">Lv.1 • Novice Hunter</div>
+            <div class="xp-bar-container" title="Current Level XP Progress">
+              <div class="xp-bar-fill" id="hudXpFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hud-actions">
+          <div class="streak-pill" title="Daily Streak">
+            <span>🔥</span>
+            <span id="hudStreakCount">1</span>
+          </div>
+          <button class="hud-btn-icon" id="btnHudLock" title="Lock Protocol">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- SCROLLABLE MAIN CONTENT AREA -->
+      <div class="main-content-scroll">
+
+        <!-- ==================== TAB 1: DAILY QUESTS ROUTINE ==================== -->
+        <div class="tab-view active" id="questsView">
+          <div class="quest-banner">
+            <div class="quest-banner-info">
+              <h2>DAILY QUESTS</h2>
+              <p id="questBannerSub">Conquer all sets to level up your hunter rank</p>
+            </div>
+            <div class="quest-progress-ring-mini">
+              <span id="questBannerPercent">0%</span>
+            </div>
+          </div>
+
+          <!-- Quests Routine List Container -->
+          <div id="questsList"></div>
+
+          <button id="btnAddQuest" class="btn-add-exercise" type="button">
+            <span>+</span>
+            <span>CUSTOMIZE EXERCISE PROTOCOL</span>
+          </button>
+        </div>
+
+        <!-- ==================== TAB 2: CHRONO TIMER ENGINE ==================== -->
+        <div class="tab-view" id="timerView">
+          <div class="timer-mode-switcher">
+            <button class="mode-tab-btn active" data-mode="quest">QUEST 20M</button>
+            <button class="mode-tab-btn" data-mode="custom">CUSTOM</button>
+            <button class="mode-tab-btn" data-mode="stopwatch">STOPWATCH</button>
+            <button class="mode-tab-btn" data-mode="hiit">HIIT</button>
+          </div>
+
+          <div class="cyber-card flex-center" style="padding: 24px 16px;">
+            <div class="timer-dial-container">
+              <div class="timer-svg-box">
+                <svg viewBox="0 0 240 240">
+                  <defs>
+                    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#00F2FE" />
+                      <stop offset="100%" stop-color="#00FF87" />
+                    </linearGradient>
+                  </defs>
+                  <circle class="timer-circle-bg" cx="120" cy="120" r="110"></circle>
+                  <circle class="timer-circle-progress" id="timerProgressRing" cx="120" cy="120" r="110"></circle>
+                </svg>
+                <div class="timer-dial-center">
+                  <div class="timer-label" id="timerDialLabel">QUEST PROTOCOL</div>
+                  <div class="timer-digits" id="timerDigits">20:00</div>
+                  <div class="timer-sub-stat" id="timerDialSubStat">TARGET: 20:00</div>
+                </div>
+              </div>
+
+              <div class="timer-chips-row" id="timerChipsRow">
+                <button class="chip-btn" id="btnSub1Min">-1m</button>
+                <button class="chip-btn" id="btnAdd1Min">+1m</button>
+                <button class="chip-btn" id="btnAdd5Min">+5m</button>
+              </div>
+
+              <div class="timer-controls-row">
+                <button class="btn-timer-circle" id="btnTimerReset" title="Reset Timer">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                  </svg>
+                </button>
+
+                <button class="btn-timer-main" id="btnTimerPlay" title="Start/Pause">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+
+                <button class="btn-timer-circle" id="btnTimerLap" title="Record Lap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 14 14"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="cyber-card" id="lapsContainer" style="display: none;">
+            <div class="card-header">
+              <span class="card-heading">⏱️ Split Laps</span>
+            </div>
+            <div class="laps-container" id="lapsList"></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 3: HUNTER'S CHRONICLE DIARY ==================== -->
+        <div class="tab-view" id="diaryView">
+          <div class="cyber-card calendar-widget">
+            <div class="calendar-header">
+              <button class="hud-btn-icon" id="btnPrevMonth">◀</button>
+              <div class="calendar-month" id="calendarMonthYear">August 2026</div>
+              <button class="hud-btn-icon" id="btnNextMonth">▶</button>
+            </div>
+            <div class="calendar-days-grid" id="calendarDaysGrid"></div>
+          </div>
+
+          <div class="cyber-card">
+            <div class="card-header">
+              <span class="card-heading">📖 Log for <span id="selectedDateLabel" class="text-cyan">Today</span></span>
+              <button class="card-badge" id="btnAttachWorkout" style="cursor:pointer;" title="Attach current routine">
+                ⚡ Auto-Attach Routine
+              </button>
+            </div>
+
+            <div class="cyber-input-group">
+              <label class="cyber-label">Hunter Condition / Mood</label>
+              <div class="mood-selector-row">
+                <button class="mood-btn selected" data-mood="🔥">
+                  <span>🔥</span>
+                  <span>BEAST</span>
+                </button>
+                <button class="mood-btn" data-mood="💪">
+                  <span>💪</span>
+                  <span>STRONG</span>
+                </button>
+                <button class="mood-btn" data-mood="⚡">
+                  <span>⚡</span>
+                  <span>FOCUSED</span>
+                </button>
+                <button class="mood-btn" data-mood="😴">
+                  <span>😴</span>
+                  <span>RECOVER</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="metrics-row">
+              <div class="metric-box">
+                <span class="cyber-label" style="font-size:0.68rem;">Body (kg)</span>
+                <input type="number" id="inputDiaryWeight" placeholder="72.5" step="0.1">
+              </div>
+              <div class="metric-box">
+                <span class="cyber-label" style="font-size:0.68rem;">Water (L)</span>
+                <input type="number" id="inputDiaryWater" placeholder="2.5" step="0.1">
+              </div>
+            </div>
+
+            <div class="cyber-input-group">
+              <label class="cyber-label">Chronicle Entry & Insights</label>
+              <textarea id="diaryTextInput" class="cyber-textarea" rows="4" placeholder="Log sets, recovery status, caloric intake, or mental state..."></textarea>
+            </div>
+
+            <button id="btnSaveDiary" class="btn-primary-action" style="width:100%;" type="button">
+              <span>💾</span>
+              <span>SAVE CHRONICLE ENTRY (+35 XP)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 4: HUNTER STATS & RANKS ==================== -->
+        <div class="tab-view" id="statsView">
+          <div class="rank-card">
+            <div class="rank-emblem" id="statsRankEmblem">E</div>
+            <div class="rank-info">
+              <h3 id="statsRankName">E-Rank Novice</h3>
+              <p id="statsRankDesc">Level 1 • 150 Total XP Acquired</p>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-metric-card">
+              <span class="stat-lbl">TOTAL REPS</span>
+              <span class="stat-val" id="statsTotalReps">120</span>
+            </div>
+            <div class="stat-metric-card">
+              <span class="stat-lbl">QUEST MINUTES</span>
+              <span class="stat-val text-emerald" id="statsTotalMinutes">45m</span>
+            </div>
+            <div class="stat-metric-card">
+              <span class="stat-lbl">WORKOUTS LOGGED</span>
+              <span class="stat-val text-pink" id="statsTotalWorkouts">3</span>
+            </div>
+            <div class="stat-metric-card">
+              <span class="stat-lbl">HUNTER STREAK</span>
+              <span class="stat-val text-gold" id="statsStreakVal">1 Days</span>
+            </div>
+          </div>
+
+          <div class="cyber-card">
+            <div class="card-header">
+              <span class="card-heading">📊 Weekly Consistency</span>
+              <span class="card-badge">7-DAY AUDIT</span>
+            </div>
+            <div class="consistency-chart">
+              <div class="chart-col"><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div><span class="chart-day-lbl">M</span></div>
+              <div class="chart-col"><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div><span class="chart-day-lbl">T</span></div>
+              <div class="chart-col"><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div><span class="chart-day-lbl">W</span></div>
+              <div class="chart-col"><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div><span class="chart-day-lbl">T</span></div>
+              <div class="chart-col"><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div><span class="chart-day-lbl">F</span></div>
+              <div class="chart-col"><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div><span class="chart-day-lbl">S</span></div>
+              <div class="chart-col"><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div><span class="chart-day-lbl">S</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 5: SYSTEM SETTINGS ==================== -->
+        <div class="tab-view" id="settingsView">
+          <div class="cyber-card settings-group">
+            <div class="card-header">
+              <span class="card-heading">⚙️ Player Profile</span>
+            </div>
+
+            <div class="cyber-input-group">
+              <label class="cyber-label">Choose Avatar</label>
+              <div class="avatar-grid" id="avatarGrid"></div>
+            </div>
+
+            <div class="cyber-input-group">
+              <label class="cyber-label">Hunter Codename</label>
+              <input type="text" id="settingPlayerName" class="cyber-textarea" style="height:42px;" placeholder="Player 1">
+            </div>
+
+            <div class="cyber-input-group">
+              <label class="cyber-label">Hunter Title</label>
+              <input type="text" id="settingPlayerTitle" class="cyber-textarea" style="height:42px;" placeholder="Shadow Monarch">
+            </div>
+
+            <div class="cyber-input-group">
+              <label class="cyber-label">Master Security PIN (4-Digits)</label>
+              <input type="password" id="settingPlayerPin" maxlength="4" class="cyber-textarea" style="height:42px; font-family:var(--font-mono); letter-spacing:4px;" placeholder="1234">
+            </div>
+
+            <button id="btnSaveSettings" class="btn-primary-action" style="width:100%; margin-top:8px;" type="button">
+              <span>💾</span>
+              <span>UPDATE PROFILE & SYSTEM</span>
+            </button>
+          </div>
+
+          <div class="cyber-card settings-group">
+            <div class="card-header">
+              <span class="card-heading">🔊 Audio & Feedback</span>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-title">Procedural Sound FX</span>
+                <span class="setting-desc">Web Audio synth beeps and level chimes</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="settingSoundToggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-title">Haptic Vibration</span>
+                <span class="setting-desc">Tactile response on button taps & reps</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="settingHapticsToggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="cyber-card settings-group">
+            <div class="card-header">
+              <span class="card-heading">💾 Data Backup & Restore</span>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button id="btnExportData" class="btn-secondary-action" style="flex:1;" type="button">
+                <span>⬇ Export JSON</span>
+              </button>
+              <button id="btnImportData" class="btn-secondary-action" style="flex:1;" type="button">
+                <span>⬆ Import JSON</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== BOTTOM NAVIGATION BAR ==================== -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" data-tab="quests" type="button">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span class="nav-label">Quests</span>
+        </button>
+
+        <button class="nav-item" data-tab="timer" type="button">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span class="nav-label">Chrono</span>
+        </button>
+
+        <button class="nav-item" data-tab="diary" type="button">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span class="nav-label">Chronicle</span>
+        </button>
+
+        <button class="nav-item" data-tab="stats" type="button">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <span class="nav-label">Hunter</span>
+        </button>
+
+        <button class="nav-item" data-tab="settings" type="button">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span class="nav-label">System</span>
+        </button>
+      </nav>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- ==================== MODAL 1: ADD CUSTOM QUEST ==================== -->
+<div class="modal-overlay" id="addQuestModal">
+  <div class="modal-box">
+    <div class="card-header">
+      <span class="card-heading">⚡ Add Exercise Quest</span>
+      <button class="hud-btn-icon" id="btnCloseAddModal" style="border:none;">✕</button>
+    </div>
+
+    <div class="cyber-input-group">
+      <label class="cyber-label">Exercise Name</label>
+      <input type="text" id="inputQuestName" class="cyber-textarea" style="height:42px;" placeholder="e.g. Diamond Push-Ups">
+    </div>
+
+    <div class="cyber-input-group">
+      <label class="cyber-label">Target Muscle Group</label>
+      <input type="text" id="inputQuestMuscle" class="cyber-textarea" style="height:42px;" placeholder="e.g. Chest & Triceps">
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+      <div class="cyber-input-group">
+        <label class="cyber-label">Sets</label>
+        <select id="inputQuestSets" class="cyber-textarea" style="height:42px;">
+          <option value="1">1 Set</option>
+          <option value="2">2 Sets</option>
+          <option value="3" selected>3 Sets</option>
+          <option value="4">4 Sets</option>
+          <option value="5">5 Sets</option>
+        </select>
+      </div>
+      <div class="cyber-input-group">
+        <label class="cyber-label">Reps / Time</label>
+        <input type="text" id="inputQuestReps" class="cyber-textarea" style="height:42px;" placeholder="12 reps">
+      </div>
+    </div>
+
+    <div class="cyber-input-group">
+      <label class="cyber-label">Icon</label>
+      <select id="inputQuestIcon" class="cyber-textarea" style="height:42px;">
+        <option value="💪">💪 Arms / Biceps</option>
+        <option value="🤸">🤸 Push-Ups / Calisthenics</option>
+        <option value="🦵">🦵 Legs / Squats</option>
+        <option value="⚡">⚡ Core / Plank</option>
+        <option value="🏋️">🏋️ Heavy Weights</option>
+        <option value="🏃">🏃 Cardio / Running</option>
+      </select>
+    </div>
+
+    <button id="btnSaveQuest" class="btn-primary-action" style="width:100%; margin-top:6px;" type="button">
+      <span>+</span>
+      <span>SAVE QUEST PROTOCOL</span>
+    </button>
+  </div>
+</div>
+
+<!-- ==================== MODAL 2: REST TIMER OVERLAY ==================== -->
+<div class="modal-overlay" id="restTimerModal">
+  <div class="modal-box" style="text-align:center; align-items:center;">
+    <span class="card-heading" style="color:var(--emerald-primary);">⚡ REST INTERVAL</span>
+    <p style="font-size:0.78rem; color:var(--text-secondary);">Catch your breath before executing the next set</p>
+    
+    <div id="restTimerVal" style="font-family:var(--font-mono); font-size:3.5rem; font-weight:800; color:var(--emerald-primary); margin:12px 0;">
+      60s
+    </div>
+
+    <button id="btnCloseRestModal" class="btn-secondary-action" style="width:100%;" type="button">
+      SKIP REST & RESUME
+    </button>
+  </div>
+</div>
+
+<!-- ==================== MODAL 3: LEVEL UP CELEBRATION ==================== -->
+<div class="modal-overlay" id="levelUpModal">
+  <div class="modal-box" style="text-align:center; align-items:center; border-color:var(--gold-primary); animation:levelUpBurst 0.5s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div style="font-size:3rem; margin-bottom:4px;">👑</div>
+    <h2 id="lvlUpNumber" style="font-family:var(--font-display); font-size:2rem; font-weight:900; color:var(--gold-primary); letter-spacing:2px;">
+      LEVEL 2
+    </h2>
+    <div id="lvlUpRankTitle" style="font-family:var(--font-mono); font-size:0.9rem; color:var(--cyan-primary); margin-bottom:14px;">
+      E-Rank • Novice Hunter
+    </div>
+    <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:16px;">
+      Your hunter stats have increased. New potential unlocked in the CHAN system!
+    </p>
+    <button id="btnCloseLvlUp" class="btn-primary-action" style="width:100%; background:linear-gradient(135deg, var(--gold-primary), #FF8800);" type="button">
+      CLAIM REWARD & CONTINUE
+    </button>
+  </div>
+</div>
+
+<div id="toastNotification"></div>
+
+<script src="js/audio.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/quests.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/diary.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
